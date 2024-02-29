@@ -1,0 +1,55 @@
+import random
+
+tiles = ['1万', '2万', '3万', '4万', '5万', '6万', '7万', '8万', '9万',
+         '1条', '2条', '3条', '4条', '5条', '6条', '7条', '8条', '9条',
+         '1饼', '2饼', '3饼', '4饼', '5饼', '6饼', '7饼', '8饼', '9饼',
+         '东', '南', '西', '北', '中', '发', '白']
+
+random.shuffle(tiles)
+
+player1_hand = tiles[:13]
+player2_hand = tiles[13:26]
+player3_hand = tiles[26:39]
+player4_hand = tiles[39:52]
+
+print("Player 1's hand:", player1_hand)
+print("Player 2's hand:", player2_hand)
+print("Player 3's hand:", player3_hand)
+print("Player 4's hand:", player4_hand)
+
+def play_card(player_hand, discard):
+    if discard in player_hand:
+        player_hand.remove(discard)
+        return discard
+    else:
+        print("Invalid discard, player does not have this tile:", discard)
+        return None
+
+def peng(player_hand, discard):
+    if player_hand.count(discard) >= 2:
+        for _ in range(2):
+            player_hand.remove(discard)
+        return True
+    else:
+        return False
+
+def gang(player_hand, discard):
+    if player_hand.count(discard) >= 3:
+        for _ in range(3):
+            player_hand.remove(discard)
+        return True
+    else:
+        return False
+
+def hu(player_hand):
+    pass
+
+discard = play_card(player1_hand, '3万')
+if discard:
+    print("Player 1 discards:", discard)
+    if peng(player2_hand, discard):
+        print("Player 2 pengs:", discard)
+    elif gang(player3_hand, discard):
+        print("Player 3 gangs:", discard)
+    else:
+        print("Player 2 does not peng, and player 3 does not gang")
